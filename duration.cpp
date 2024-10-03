@@ -1,7 +1,7 @@
 #include <chrono>
-#include <functional>
+#include "duration.h"
 
-double measure_time(const std::function<void(const std::vector<int>&)>& func, const std::vector<int>& vector) {
+double measure_time(const std::function<void(const std::vector<int>& vector)>& func, const std::vector<int>& vector) {
     const auto start = std::chrono::system_clock::now();
 
     func(vector);
