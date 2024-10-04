@@ -6,6 +6,4 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_executable(task-2 main.cpp
                     duration.cpp
-        algos.cpp
-        algos.h
-        duration.h)
+                    algos.cpp)

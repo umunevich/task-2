@@ -1,3 +1,4 @@
+// duration.h
 #ifndef DURATION_H
 #define DURATION_H
 
