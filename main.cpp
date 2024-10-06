@@ -1,11 +1,37 @@
 // main.cpp
 #include <iostream>
-#include "duration.h"
+#include <chrono>
+#include <functional>
 #include "algos.h"
 
-int main() {
-    std::vector<int> vec1 = {10, 2, 4, 1, 8, 3, 2 , 4 , 1 , 5 , 6 , 7 , 8 , 9};
+void fill_vector(std::vector<int>& vector);
+std::pair<double, bool> measure_time(const std::function<bool(const std::vector<int>& vector)>& func, const std::vector<int>& vector);
 
-    std::cout << measure_time(without_politic, vec1) << std::endl;
+int main() {
+    std::vector<int> vector100(100);
+    fill_vector(vector100);
+
+    auto pair = measure_time(without_politic, vector100);
+    std::cout << "Time: " << pair.first << " Result: " << std::boolalpha << pair.second << std::endl;
+
+
     return 0;
 }
+
+void fill_vector(std::vector<int>& vector) {
+    for (auto &it : vector) {
+        it = rand() % vector.size();
+    }
+}
+
+std::pair<double, bool> measure_time(const std::function<bool(const std::vector<int>& vector)>& func, const std::vector<int>& vector) {
+    bool result;
+    const auto start = std::chrono::system_clock::now();
+
+    result = func(vector);
+
+    const auto end = std::chrono::system_clock::now();
+    const auto duration = std::chrono::duration<double>{end - start};
+    return std::pair<double, bool>{duration.count(), result};
+}
+

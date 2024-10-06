@@ -4,6 +4,6 @@
 
 #include <vector>
 
-void without_politic(const std::vector<int>& vector);
+bool without_politic(const std::vector<int>& vector);
 
 #endif
