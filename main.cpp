@@ -1,37 +1,23 @@
 // main.cpp
-#include <iostream>
-#include <chrono>
-#include <functional>
-#include "algos.h"
+// Created by Yana Utochkina
 
-void fill_vector(std::vector<int>& vector);
-std::pair<double, bool> measure_time(const std::function<bool(const std::vector<int>& vector)>& func, const std::vector<int>& vector);
+#include <random>
+#include "policy.h"
+
+void fillVector(std::vector<int> &vector, int size, int from, int to);
 
 int main() {
-    std::vector<int> vector100(100);
-    fill_vector(vector100);
-
-    auto pair = measure_time(without_politic, vector100);
-    std::cout << "Time: " << pair.first << " Result: " << std::boolalpha << pair.second << std::endl;
-
-
-    return 0;
+    std::vector<int> vector;
+    fillVector(vector, 1000000, 1, 20);
+    std::ofstream outputFile("output.txt");
+    no_policy(vector, outputFile);
 }
 
-void fill_vector(std::vector<int>& vector) {
-    for (auto &it : vector) {
-        it = rand() % vector.size();
+void fillVector(std::vector<int> &vector, int size, int from, int to) {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dist(from, to);
+    for (int i = 0; i < size; i++) {
+        vector.push_back(dist(gen));
     }
 }
-
-std::pair<double, bool> measure_time(const std::function<bool(const std::vector<int>& vector)>& func, const std::vector<int>& vector) {
-    bool result;
-    const auto start = std::chrono::system_clock::now();
-
-    result = func(vector);
-
-    const auto end = std::chrono::system_clock::now();
-    const auto duration = std::chrono::duration<double>{end - start};
-    return std::pair<double, bool>{duration.count(), result};
-}
-
