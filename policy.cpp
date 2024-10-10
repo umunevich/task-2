@@ -10,7 +10,7 @@ void no_policy(std::vector<int>& vector, std::ofstream& output) {
             return pred(el);
         });
     });
-    output << "Time: " << result.first.count() << "ns " << "Result: " << std::boolalpha << result.second << std::endl;
+    output << "Time: " << result.first.count() << "ns " << "Result: " << std::boolalpha << result.second << std::endl << std::endl;
 }
 
 std::pair<std::chrono::nanoseconds, bool> measure_time(const std::function<bool()>& function) {
@@ -22,11 +22,11 @@ std::pair<std::chrono::nanoseconds, bool> measure_time(const std::function<bool(
 }
 
 bool pred(int el) {
-    #ifdef PRED_LESS_THEN_ZERO
-        return el < 0;
-    #endif
-
-    #ifdef PRED_IS_EVEN
-        return el % 2 == 0;
-    #endif
+#ifdef PRED_LESS_THEN_ZERO
+    return el < 0;
+#elif  PRED_IS_EVEN
+    return el % 2 == 0;
+#else
+    return el > 0;
+#endif
 }
