@@ -24,9 +24,44 @@ std::pair<std::chrono::nanoseconds, bool> measure_time(const std::function<bool(
 bool pred(int el) {
 #ifdef PRED_LESS_THEN_ZERO
     return el < 0;
-#elif  PRED_IS_EVEN
+#endif
+#ifdef  PRED_IS_EVEN
     return el % 2 == 0;
 #else
     return el > 0;
 #endif
+}
+
+void particular_proccessing(std::vector<int>::iterator begin, std::vector<int>::iterator end, std::vector<bool>::iterator curr) {
+    *curr = std::any_of(std::execution::seq, begin, end, [&](int el) {return pred(el);});
+}
+
+void custom_policy(std::vector<int>& vector, int K, std::ofstream& output, std::ofstream& resultTable) {
+
+
+    auto part_size = vector.size() / K;
+
+    const auto start = std::chrono::system_clock::now();
+    std::vector<std::thread> threads;
+    std::vector<bool> results(K);
+    for (int i = 0; i < K; i++) {
+        threads.emplace_back([&]{particular_proccessing(vector.begin() + (i * part_size), vector.end(), results.begin()+i);});
+    }
+    for (int i = 0; i < K; i++) {
+        threads[i].join();
+    }
+    for (int i = 0; i < K; i++) {
+        std::cout << results[i] << std::endl;
+    }
+    std::cout << "tyt" << std::endl;
+    bool result = std::any_of(results.begin(), results.end(), [&](bool el) {
+        return el;
+    });
+    std::cout << result << std::endl;
+
+    const auto end = std::chrono::system_clock::now();
+    auto duration = end - start;
+
+    resultTable << K << "; " << duration.count() << std::endl;
+    output << duration.count() << "ns. Result: " << result << std::endl;
 }
