@@ -33,35 +33,33 @@ bool pred(int el) {
 }
 
 void particular_proccessing(std::vector<int>::iterator begin, std::vector<int>::iterator end, std::vector<bool>::iterator curr) {
-    *curr = std::any_of(std::execution::seq, begin, end, [&](int el) {return pred(el);});
+    *curr = std::any_of(/*std::execution::seq,*/ begin, end, [&](int el) {
+        return pred(el);
+    });
 }
 
 void custom_policy(std::vector<int>& vector, int K, std::ofstream& output, std::ofstream& resultTable) {
-
-
-    auto part_size = vector.size() / K;
+    int part_size = vector.size() / K;
 
     const auto start = std::chrono::system_clock::now();
     std::vector<std::thread> threads;
     std::vector<bool> results(K);
-    for (int i = 0; i < K; i++) {
-        threads.emplace_back([&]{particular_proccessing(vector.begin() + (i * part_size), vector.end(), results.begin()+i);});
+    for (int i = 0; i < K - 1; i++) {
+        threads.emplace_back(particular_proccessing, vector.begin() + (i * part_size), vector.begin() + ((i + 1) * part_size), results.begin()+i);
     }
+    threads.emplace_back(particular_proccessing, vector.begin() + ((K - 1) * part_size), vector.end(), results.begin()+(K-1));
     for (int i = 0; i < K; i++) {
-        threads[i].join();
+        if (threads[i].joinable()) {
+            threads[i].join();
+        }
     }
-    for (int i = 0; i < K; i++) {
-        std::cout << results[i] << std::endl;
-    }
-    std::cout << "tyt" << std::endl;
-    bool result = std::any_of(results.begin(), results.end(), [&](bool el) {
+    const bool result = std::any_of(results.begin(), results.end(), [&](bool el) {
         return el;
     });
-    std::cout << result << std::endl;
 
     const auto end = std::chrono::system_clock::now();
     auto duration = end - start;
 
-    resultTable << K << "; " << duration.count() << std::endl;
+    resultTable << K << ", " << duration.count() << std::endl;
     output << duration.count() << "ns. Result: " << result << std::endl;
 }

@@ -10,7 +10,8 @@ void fillVector(std::vector<int> &vector, int size, int from, int to);
 
 int main() {
     std::vector<int> vector;
-    fillVector(vector, 1000000, 1, 20);
+    fillVector(vector, 60000, 1, 20); // 100000000 ln(1/x), 60000
+    std::cout << std::endl;
     std::ofstream outputFile("output.txt");
     // 1)
     no_policy(vector, outputFile);
