@@ -15,5 +15,5 @@
 
 <h2>Графіки залежності часу від кількості потоків:</h2>
 <img src="https://github.com/umunevich/task-2/blob/master/Results/Test1/700.png"/>
-<img src="https://github.com/umunevich/task-2/blob/master/Results/Test1/60000.png"/>
-<img src="https://github.com/umunevich/task-2/blob/master/Results/Test1/100000000.png"/>
+<img src="https://github.com/umunevich/task-2/blob/master/Results/Test2/60000.png"/>
+<img src="https://github.com/umunevich/task-2/blob/master/Results/Test3/100000000.png"/>
