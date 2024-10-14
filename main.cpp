@@ -47,7 +47,7 @@ int main() {
 
 void task_info(std::ofstream &output) {
     output << "Test data: vector<int>(" << SIZE << "), where values from " << FROM << " to " << TO << ". " << std::endl;
-    output << "Operation: std::any_of. " << std::endl;
+    output << "Operation: std::any_of. Predicate: x less then 0" << std::endl;
     output << std::endl;
 }
 
