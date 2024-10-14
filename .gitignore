@@ -3,5 +3,5 @@ cmake-build-debug/
 
 GraphicRender/
 
-.gitignore
+*.gitignore
 
