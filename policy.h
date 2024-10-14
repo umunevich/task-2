@@ -10,7 +10,12 @@
 #include <functional>
 #include <execution>
 #include <thread>
-#include <iostream>
+
+// Above defined different predicates.
+#define PRED_LESS_THEN_ZERO
+//#define PRED_IS_EVEN
+
+#endif
 
 void no_policy(std::vector<int>& vector, std::ofstream& output);
 
@@ -29,9 +34,3 @@ void with_policy(Policy policy, std::vector<int>& vector, std::ofstream& output)
 }
 
 void custom_policy(std::vector<int>& vector, int K, std::ofstream& output, std::ofstream& resultTable);
-
-// Above defined different predicates.
-//#define PRED_LESS_THEN_ZERO
-#define PRED_IS_EVEN
-
-#endif

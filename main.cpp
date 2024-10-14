@@ -2,17 +2,22 @@
 // Created by Yana Utochkina
 
 #include <random>
-#include <iostream>
 
 #include "policy.h"
 
-void fillVector(std::vector<int> &vector, int size, int from, int to);
+const int FROM = 1;
+const int TO = 20;
+const int SIZE = 100000000; // 100000000 "ln(1/x)", 60000 "x^2", 700 "ln(x)"
+
+void fillVector(std::vector<int> &vector);
+void task_info(std::ofstream &output);
 
 int main() {
     std::vector<int> vector;
-    fillVector(vector, 60000, 1, 20); // 100000000 ln(1/x), 60000
-    std::cout << std::endl;
     std::ofstream outputFile("output.txt");
+
+    task_info(outputFile);
+    fillVector(vector);
     // 1)
     no_policy(vector, outputFile);
     // 2)
@@ -34,18 +39,23 @@ int main() {
     // 3)
     std::ofstream resultTable("result.csv");
     resultTable << "K; Time" << std::endl;
-    std::cout << std::thread::hardware_concurrency() << std::endl;
     for (int i = 1; i <= std::thread::hardware_concurrency(); i++) {
         outputFile << "Custom policy: " << i << " threads. Time: ";
         custom_policy(vector, i, outputFile, resultTable);
     }
 }
 
-void fillVector(std::vector<int> &vector, const int size, const int from, const int to) {
+void task_info(std::ofstream &output) {
+    output << "Test data: vector<int>(" << SIZE << "), where values from " << FROM << " to " << TO << ". " << std::endl;
+    output << "Operation: std::any_of. " << std::endl;
+    output << std::endl;
+}
+
+void fillVector(std::vector<int> &vector) {
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dist(from, to);
-    for (int i = 0; i < size; i++) {
+    std::uniform_int_distribution<> dist(FROM, TO);
+    for (int i = 0; i < SIZE; i++) {
         vector.push_back(dist(gen));
     }
 }

@@ -25,4 +25,4 @@ def build_plot(points: dict[int, int], image_name: str, labels: tuple[str, str])
 
 
 if __name__ == "__main__":
-    build_plot({1: 2}, "pipi", ("Threads", "Time in ns"))
+    build_plot({1: 2}, "test", ("Threads", "Time in ns"))

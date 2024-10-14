@@ -3,6 +3,17 @@
 
 #include "policy.h"
 
+bool pred(int el) {
+#ifdef PRED_LESS_THEN_ZERO
+    return el < 0;
+#endif
+#ifdef  PRED_IS_EVEN
+    return el % 2 == 0;
+#else
+    return el > 0;
+#endif
+}
+
 void no_policy(std::vector<int>& vector, std::ofstream& output) {
     output << "Policy: No. " << std::endl;
     std::pair<std::chrono::nanoseconds, bool> result = measure_time([&vector]() {
@@ -21,29 +32,18 @@ std::pair<std::chrono::nanoseconds, bool> measure_time(const std::function<bool(
     return std::make_pair(duration, result);
 }
 
-bool pred(int el) {
-#ifdef PRED_LESS_THEN_ZERO
-    return el < 0;
-#endif
-#ifdef  PRED_IS_EVEN
-    return el % 2 == 0;
-#else
-    return el > 0;
-#endif
-}
-
 void particular_proccessing(std::vector<int>::iterator begin, std::vector<int>::iterator end, std::vector<bool>::iterator curr) {
-    *curr = std::any_of(/*std::execution::seq,*/ begin, end, [&](int el) {
+    *curr = std::any_of(std::execution::seq, begin, end, [&](int el) {
         return pred(el);
     });
 }
 
 void custom_policy(std::vector<int>& vector, int K, std::ofstream& output, std::ofstream& resultTable) {
     int part_size = vector.size() / K;
-
-    const auto start = std::chrono::system_clock::now();
     std::vector<std::thread> threads;
     std::vector<bool> results(K);
+    const auto start = std::chrono::system_clock::now();
+
     for (int i = 0; i < K - 1; i++) {
         threads.emplace_back(particular_proccessing, vector.begin() + (i * part_size), vector.begin() + ((i + 1) * part_size), results.begin()+i);
     }
@@ -53,7 +53,7 @@ void custom_policy(std::vector<int>& vector, int K, std::ofstream& output, std::
             threads[i].join();
         }
     }
-    const bool result = std::any_of(results.begin(), results.end(), [&](bool el) {
+    const bool result = std::any_of(std::execution::seq, results.begin(), results.end(), [&](bool el) {
         return el;
     });
 
