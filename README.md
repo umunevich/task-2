@@ -8,7 +8,7 @@
 <img src="https://github.com/umunevich/task-2/blob/master/Results/Execute.png"/>
 
 <h2>Файли зі стандартним виходом програми:</h2>
-<p>Програма тестувалась тричі за різних розмірів данних та одного предиката. А саме:</p>
+<p>Програма тестувалась тричі за різних розмірів данних та одного предиката. А саме(нижче наведенні посилання на директорії з .csv та .txt файлами):</p>
 <ul>
   <a href = "https://github.com/umunevich/task-2/tree/master/Results/Test1"><li>700</li></a>
   <a href = "https://github.com/umunevich/task-2/tree/master/Results/Test2"><li>60 000</li></a>
