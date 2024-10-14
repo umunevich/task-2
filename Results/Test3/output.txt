@@ -1,0 +1,18 @@
+Test data: vector<int>(100000000), where values from 1 to 20. 
+Operation: std::any_of. Predicate: x less then 0
+
+Policy: No. 
+Time: 1491697000ns Result: false
+
+With policy: Sequenced
+Time: 1490370100ns Result: false
+
+With policy: Parallel
+Time: 1455785600ns Result: false
+
+With policy: Unsequenced
+Time: 604629700ns Result: false
+
+With policy: Parallel unsequenced
+Time: 629878100ns Result: false
+

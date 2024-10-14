@@ -1,0 +1,30 @@
+Test data: vector<int>(700), where values from 1 to 20. 
+Operation: std::any_of. Predicate: x less then 0
+
+Policy: No. 
+Time: 4800ns Result: false
+
+With policy: Sequenced
+Time: 11200ns Result: false
+
+With policy: Parallel
+Time: 4900ns Result: false
+
+With policy: Unsequenced
+Time: 13200ns Result: false
+
+With policy: Parallel unsequenced
+Time: 12900ns Result: false
+
+Custom policy: 1 threads. Time: 175500ns. Result: false
+Custom policy: 2 threads. Time: 178600ns. Result: false
+Custom policy: 3 threads. Time: 201200ns. Result: false
+Custom policy: 4 threads. Time: 230100ns. Result: false
+Custom policy: 5 threads. Time: 315800ns. Result: false
+Custom policy: 6 threads. Time: 289900ns. Result: false
+Custom policy: 7 threads. Time: 365000ns. Result: false
+Custom policy: 8 threads. Time: 402500ns. Result: false
+Custom policy: 9 threads. Time: 413300ns. Result: false
+Custom policy: 10 threads. Time: 451700ns. Result: false
+Custom policy: 11 threads. Time: 498800ns. Result: false
+Custom policy: 12 threads. Time: 533600ns. Result: false
